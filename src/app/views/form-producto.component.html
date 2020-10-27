@@ -1,0 +1,175 @@
+<div>
+<form #f="ngForm" method="post" novalidate>
+    <div class="card">    
+        <div class="card-header">
+            <h4>FORMULARIO PRODUCTO</h4>
+        </div>
+        <div class="card-body">
+    
+            <div class="row form-group">
+                <label for="nombre" class="col-xs-12 col-md-4">NOMBRE</label>
+                <div class="col-xs-12 col-md-8">
+                    <input [(ngModel)]="producto.nombre" name="nombre"
+                        type="text" class="form-control" id="nombre">
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="marca" class="col-xs-12 col-md-4">MARCA</label>
+                <div class="col-xs-12 col-md-8">
+                    <input [(ngModel)]="producto.marca" name="marca" type="text" class="form-control" id="marca">
+                </div>
+            </div>
+            
+            <div class="row form-group">
+                <label for="clasificacion" class="col-xs-12 col-md-4">CLASIFICACIÓN</label>
+                <div class="col-xs-12 col-md-8">
+                    <select [(ngModel)]="producto.clasificacion" (change)="onSelectClasificacion($event.target.value)"  name="clasificacion" id="clasificacion" class="form-control">
+                        <option value="0">-- SELECCIONE --</option>
+                        <option *ngFor="let clasificacion of clasificaciones" value="{{clasificacion}}" >
+                            {{clasificacion}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="familia" class="col-xs-12 col-md-4">FAMILIA</label>
+                <div class="col-xs-12 col-md-8">
+                    <select [(ngModel)]="producto.familia" (change)="onSelectFamilia($event.target.value)" name="familia" id="familia" class="form-control">
+                        <option value="0">-- SELECCIONE --</option>
+                        <option *ngFor="let familia of familias" value="{{familia.familia}}" >{{familia.familia}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="categoria" class="col-xs-12 col-md-4">CATEGORIA</label>
+                <div class="col-xs-12 col-md-8">
+                    <select [(ngModel)]="producto.categoria" name="categoria" id="categoria" class="form-control">
+                        <option value="0">-- SELECCIONE --</option>
+                        <option *ngFor="let categoria of categorias" value="{{ categoria.categoria }}">{{ categoria.categoria }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="stockInicial" class="col-xs-12 col-md-4">STOCK INICIAL</label>
+                <div class="col-xs-12 col-md-8">
+                    <input type="number" [(ngModel)]="producto.stockInicial" name="stockInicial" id="stockInicial" class="form-control">
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="stockMinimo" class="col-xs-12 col-md-4">STOCK MINIMO</label>
+                <div class="col-xs-12 col-md-8">
+                    <input type="number" [(ngModel)]="producto.stockMinimo" name="stockMinimo" id="stockMinimo" class="form-control">
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label class="col-xs-12 col-md-4">¿PERECEDOR?</label>
+                <div class="col-xs-12 col-md-8">
+                    <input [checked]="!producto.perecedor" type="radio" name="perecedor" id="si_perecedor" class="rb-pointer" (click)="showOrHideInputFechaVencimiento(false)">
+                        <label for="si_perecedor" class="ml-2 mr-3">NO</label> 
+                    <input [checked]="producto.perecedor" type="radio" name="perecedor" id="no_perecedor" class="rb-pointer" (click)="showOrHideInputFechaVencimiento(true)">
+                        <label for="no_perecedor" class="ml-2">SI</label>   
+                </div>
+            </div>
+
+            <div class="row form-group" *ngIf="producto.perecedor">
+                <label for="fechaVencimiento" class="col-xs-12 col-md-4">FECHA DE VENCIMIENTO</label>
+                <div class="col-xs-12 col-md-8">
+                    <input [(ngModel)]="producto.fechaVencimiento" name="fechaVencimiento" id="fechaVencimiento" type="date" class="form-control">
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label class="col-xs-12 col-md-4">¿PRODUCTO PARA?</label>
+                <div class="col-xs-12 col-md-8">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-3 pt-1">
+                            <input [checked]="producto.venta" [(ngModel)]="producto.venta" type="checkbox" name="venta" id="para_venta" class="rb-pointer">
+                                <label for="para_venta" class="ml-2 mr-2">VENTA</label>
+                        </div>
+                        <div class="col-xs-12 col-md-3 pt-1">
+                            <input [checked]="producto.compra" [(ngModel)]="producto.compra" type="checkbox" name="compra" id="para_compra" class="rb-pointer">
+                                <label for="para_compra" class="ml-2 mr-2">COMPRA</label> 
+                        </div>
+                        <div class="col-xs-12 col-md-3 pt-1">
+                            <input [checked]="producto.obsequio" [(ngModel)]="producto.obsequio" type="checkbox" name="obsequio" id="para_obsequio" class="rb-pointer">
+                                <label for="para_obsequio" class="ml-2">OBSEQUIO</label>
+                        </div>
+                    </div>                                     
+                    
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label for="comentario" class="col-xs-12 col-md-4">COMENTARIO</label>    
+                <div class="col-xs-12 col-md-8">
+                    <textarea [(ngModel)]="producto.comentario" class="form-control" name="comentario" 
+                        id="comentario" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="row form-group mb-4" style="height: 200px;">
+                <label for="foto" class="col-xs-12 col-md-4">FOTO</label>    
+                <div class="col-xs-12 col-md-8">
+                    <input type="file" name="foto" id="foto" (change)="handleFileSelect($event)" style="display: none;">
+                    <img [src]="url" onerror="this.src = '../../assets/img/selecciona_foto.png'" alt="" (click)="triggerClick()" style="width: 200px;height: 200px; cursor: pointer;">
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-12 col-md-12">
+                    <table class="table table-bordered table-hover">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <td class="text-center">
+                                    <button (click)="addRowCosto()" type="button" class="btn btn-primary">
+                                        <i class="fas fa-plus-square"></i>
+                                    </button>
+                                </td>
+                                <td>PROVEEDOR</td>  
+                                <td>COSTO</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let costo of costos; let i = index;">                                
+                                <td class="text-center">
+                                    <button (click)="deleteRowCosto(i)" type="button" class="btn btn-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <select [(ngModel)]="costo.proveedor.id" name="proveedor_id{{costo.contador}}" class="form-control">
+                                        <option value="0">--SELECCIONE--</option>
+                                        <option *ngFor="let proveedor of proveedores" value="{{proveedor.id}}">{{proveedor.razonSocial}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" [(ngModel)]="costo.costo" class="form-control" name="costo{{costo.contador}}">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>                
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-xs-12 offset-md-10 col-md-2">
+                    <button (click)="enviar()" class="btn btn-success btn-block"
+                        role="button" [disabled]="!f.valid" *ngIf="producto.id == undefined else elseBlock">
+                        <i class="fas fa-save mr-1"></i>REGISTRAR</button>                    
+                    <ng-template #elseBlock>
+                        <button (click)="guardarCambios()" class="btn btn-success btn-block" role="button" 
+                            [disabled]="!f.valid"><i class="fas fa-save mr-1"></i>GUARDAR</button>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</div>

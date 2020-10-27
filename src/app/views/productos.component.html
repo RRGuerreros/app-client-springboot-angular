@@ -1,0 +1,121 @@
+<div class="row mt-4">
+    <div class="col-xs-12 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <button [routerLink]="['/productos/form']" class="btn btn-primary" type="button">
+                   <i class="fas fa-plus-square mr-1"></i>NUEVO</button>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover nowrap">
+                                <thead>
+                                    <tr>
+                                        <td>OPCIÓN</td>
+                                        <td>NOMBRE</td>
+                                        <td>CLASIFICACIÓN</td>
+                                        <td>FAMILIA</td>
+                                        <td>CATEGORIA</td>
+                                        <td>MARCA</td>
+                                        <td>STOCK INICIAL</td>
+                                        <td>STOCK MINIMO</td>
+                                        <td>PERECEDOR</td>
+                                        <td>VENTA</td>
+                                        <td>COMPRA</td>
+                                        <td>OBSEQUIO</td>
+                                        <td>FECHA VENCIMIENTO</td>
+                                        <td>COMENTARIO</td>
+                                        <td>FECHA DE CREACIÓN</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let producto of productos">
+                                        <td>
+                                            <button type="button" name="button" class="btn btn-warning btn-sm mr-1"
+                                                [routerLink]="['/productos/form', producto.id]" data-toggle="tooltip" data-placement="top" title="Editar">
+                                                   <i class="fas fa-edit"></i></button>  
+                                            <button type="button" name="button" class="btn btn-danger btn-sm mr-1"  data-toggle="tooltip" data-placement="top" title="Eliminar"
+                                                (click)="eliminarProducto(producto)">
+                                                    <i class="fas fa-trash"></i></button>                                                  
+                                            <button (click)="detalle($event.path[0], producto.id)"  data-toggle="tooltip" data-placement="top" title="Detalle"
+                                                type="button" class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-info-circle"></i></button>
+                                        </td>
+                                        <td>{{producto.nombre}}</td>
+                                        <td>{{producto.clasificacion}}</td>
+                                        <td>{{producto.familia}}</td>
+                                        <td>{{producto.categoria}}</td>
+                                        <td>{{producto.marca}}</td>
+                                        <td>{{producto.stockInicial}}</td>
+                                        <td>{{producto.stockMinimo}}</td>
+                                        <td class="text-center" *ngIf="producto.perecedor else blockPerecedor"><i class="fas fa-check text-success"></i></td>
+                                        <ng-template #blockPerecedor>
+                                            <td class="text-center" ><i class="fas fa-times text-danger"></i></td>
+                                        </ng-template>
+                                        <td class="text-center"  *ngIf="producto.venta else blockVenta"><i class="fas fa-check text-success"></i></td>
+                                        <ng-template #blockVenta>
+                                            <td class="text-center" ><i class="fas fa-times text-danger"></i></td>
+                                        </ng-template>
+                                        <td class="text-center"  *ngIf="producto.compra else blockCompra"><i class="fas fa-check text-success"></i></td>
+                                        <ng-template #blockCompra>
+                                            <td class="text-center" ><i class="fas fa-times text-danger"></i></td>
+                                        </ng-template>
+                                        <td class="text-center" *ngIf="producto.obsequio else blockObsequio"><i class="fas fa-check text-success"></i></td>
+                                        <ng-template #blockObsequio>
+                                            <td class="text-center" ><i class="fas fa-times text-danger"></i></td>
+                                        </ng-template>
+                                        <td>{{ datePipe.transform(producto.fechaVencimiento,"dd-MM-yyyy") }}</td>
+                                        <td>{{ producto.comentario}}</td>
+                                        <td>{{ datePipe.transform(producto.fechaCreacion,"dd-MM-yyyy") }}</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td><input type="text" class="form-control" name="search-nombre"/></td>
+                                        <td>
+                                            <select class="form-control" name="search-clasificacion"> 
+                                                <option value=""></option>
+                                                <option *ngFor="let clasificacion of clasificaciones" value="{{clasificacion}}">{{clasificacion}}</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control" name="search-familia"> 
+                                                <option value=""></option>
+                                                <option *ngFor="let familia of familias" value="{{familia.familia}}">{{familia.familia}}</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control" name="search-categoria"> 
+                                                <option value=""></option>
+                                                <option *ngFor="let categoria of categorias" value="{{categoria.categoria}}">{{categoria.categoria}}</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" class="form-control" name="search-marca"/></td>
+                                        <td><input type="text" class="form-control" name="search-stock-inicial"/></td>
+                                        <td><input type="text" class="form-control" name="search-stock-minimo"/></td>
+                                        
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="card-footer"></div>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+    min-height: 100%;
+    position: relative;
+}
+body{
+    margin-bottom: 60px;
+}
+
+.rb-pointer, .rb-pointer ~ label{
+    cursor: pointer;
+}
+
+/*
+    src/styles.css (i.e. your global style)
+*/
+.dataTables_empty {
+    display: none;
+}
